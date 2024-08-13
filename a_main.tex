@@ -1,0 +1,162 @@
+\documentclass[11pt,a4paper]{report}
+
+% Packages
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cite} % For IEEE-style citations
+\usepackage[spanish]{babel} % Language support for Spanish
+\usepackage{hyperref} % For hyperlinks
+\usepackage{geometry} % For setting margins
+\usepackage{titlesec} % For title formatting
+\usepackage{fancyhdr} % For header and footer
+\usepackage{helvet} % For Arial font
+\usepackage{ragged2e} % For justified text
+\usepackage{setspace} % For line spacing control
+\usepackage{float} % For figure and table placement
+\usepackage{caption} % For customizing captions
+\usepackage[titles]{tocloft} % For customizing Table of Contents
+\usepackage{appendix} % For managing appendices
+\usepackage{etoolbox} % For advanced LaTeX commands
+\usepackage{lipsum}
+\renewcommand{\familydefault}{\sfdefault} % Set font to Arial
+
+% Page Layout
+\geometry{left=3cm, right=2.5cm, top=3cm, bottom=2.5cm}
+
+\setlength{\parindent}{0pt} % No indentation for paragraphs
+\setstretch{1.5} % Line spacing
+
+% Custom command to enforce no indentation
+\newcommand{\noindentation}{\setlength{\parindent}{0pt} \raggedright}
+
+% *** Custom chapter title format with 14pt font size ***
+\titleformat{\chapter}[block]
+  {\normalfont\fontsize{14pt}{14pt}\selectfont\bfseries}
+  {\thechapter\ }{0pt}{\fontsize{14pt}{16pt}\selectfont\bfseries}
+
+% *** Adjust spacing after chapter titles ***
+\titlespacing*{\chapter}{0pt}{-20pt}{5pt} % Left indent: 0pt, Space before: -20pt (default adjustment), Space after: 5pt
+
+
+% Custom title format for RESUMEN and ABSTRACT
+\titleformat{name=\chapter,numberless}[block]
+  {\centering\normalfont\fontsize{14pt}{16pt}\selectfont\bfseries}
+  {}{0pt}{\vspace{8pt}}
+
+  
+% *** Custom section title format with 14pt font size ***
+\titleformat{\section}
+  {\normalfont\fontsize{14pt}{14pt}\selectfont\bfseries}{\thesection\ \ }{0pt}{\fontsize{14pt}{14pt}\selectfont\bfseries}
+
+% *** Adjust spacing after section titles and set left indentation ***
+\titlespacing*{\section}{1.25cm}{*}{8pt} % Left indent: 1.25cm, Space before: default (*), Space after: 8pt
+
+% *** Custom subsection title format (Unnumbered and Starts on New Line) ***
+\titleformat{\subsection}[block] % "block" style ensures content starts on a new line
+{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}{}{0pt}{\fontsize{12pt}{14pt}\selectfont\bfseries}
+
+
+% *** Adjust spacing after unnumbered subsection titles and set left indentation ***
+\titlespacing*{\subsection}{1.25cm}{*}{8pt} % Left indent: 1.25cm, Space before: default (*), Space after: 8pt
+
+
+
+
+% Header and Footer
+\fancypagestyle{plain}{
+  \fancyhf{}
+  %\fancyhead[L]{\textit{Escuela Politécnica Nacional}}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\addto\captionsspanish{
+  \renewcommand{\contentsname}{\centering ÍNDICE DE CONTENIDO}
+}
+
+
+\captionsetup[figure]{
+    labelsep=period,
+    labelfont={bf},
+    textfont=small,
+    name=Figura,
+}
+
+\captionsetup[table]{
+    labelsep=period,
+    labelfont={bf},
+    textfont=small,
+    name=Tabla,
+}
+% Custom Table of Contents formatting
+\renewcommand{\cftchapfont}{\normalfont\normalsize} % Chapter entries in ToC
+\renewcommand{\cftsecfont}{\normalfont\normalsize}  % Section entries in ToC
+\renewcommand{\cftsubsecfont}{\normalfont\normalsize} % Subsection entries in ToC
+
+\renewcommand{\cftchappagefont}{\normalfont\normalsize} % Chapter page numbers in ToC
+\renewcommand{\cftsecpagefont}{\normalfont\normalsize}  % Section page numbers in ToC
+\renewcommand{\cftsubsecpagefont}{\normalfont\normalsize} % Subsection page numbers in ToC
+
+% Set uniform line spacing in ToC
+\begingroup
+\renewcommand{\cftbeforetoctitleskip}{0pt}
+\renewcommand{\cftaftertoctitleskip}{0pt}
+\setstretch{1.5} % Ensure 1.5 line spacing in ToC
+\makeatletter
+\patchcmd{\tableofcontents}{\@starttoc}{\begingroup\setstretch{1.5}\@starttoc}{}{}
+\makeatother
+\endgroup
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% Set page numbering to Roman numerals
+\pagenumbering{roman}
+
+% Include sections
+\input{portada}
+\input{declaracion_autoria}
+\input{dedicatoria}
+\input{agradecimiento}
+\tableofcontents
+\input{resumen}
+\input{abstract}
+% Chapters
+
+% Start Arabic page numbering from Chapter 1
+\clearpage
+\pagenumbering{arabic}
+\input{chapter1}
+\input{chapter2}
+\input{chapter3}
+\input{conclusiones}
+
+% *** Start of Appendix Configuration ***
+\appendix % Start the appendix section
+
+% Redefine the chapter command for appendices
+\titleformat{\chapter}[block]
+  {\normalfont\fontsize{14pt}{14pt}\selectfont\bfseries}
+  {ANEXO \thechapter\ }{0pt}{\fontsize{14pt}{16pt}\selectfont\bfseries\vspace{1em}}
+
+\renewcommand{\thechapter}{\Roman{chapter}} % Use Roman numerals for appendix chapters
+
+% Adjust section numbering in the appendices
+\renewcommand{\thesection}{\thechapter.\arabic{section}} % Section numbering as I.1, II.1, etc.
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}} % Subsection numbering as I.1.1, II.1.1, etc.
+
+\input{anexo1}
+\input{anexo2}
+
+% References
+\renewcommand{\bibname}{REFERENCIAS BIBLIOGRÁFICAS}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
